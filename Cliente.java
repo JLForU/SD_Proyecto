@@ -3,6 +3,9 @@
 
 
 // IMPORTACIONES
+//// Números aleatorios.
+import java.util.Random ;
+//// Establecer conexión.
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -20,8 +23,72 @@ public class Cliente {
     public static void main ( String[] args ) {
 
 
-		String mensaje = "Hola" ;
-		String respuesta = new String() ;
+		while ( true ) {
+
+			String mensaje = funcioon_GenerarParaametros() ;
+
+			String respuesta = funcioon_EstablecerConexioon ( mensaje ) ;
+
+			System.out.println ( respuesta ) ;
+
+		}
+
+
+    }
+
+	public static void funcioon_Esperar ( ) {
+
+		try {
+			Thread.sleep(2_000) ;
+		} catch ( InterruptedException e ) {
+			e.printStackTrace() ;
+		}
+
+	}
+
+	public static String funcioon_GenerarParaametros ( ) {
+
+		funcioon_Esperar() ;
+
+		String[] paraametros = {"°F","pH","Mg/L"} ;
+
+		Random random = new Random() ;
+		int paraametro = random.nextInt ( 3 ) ;
+
+		int parteEntera = 0 ;
+		int parteDecimal = 0 ;
+		String dato = new String() ;
+
+		switch ( paraametro ) {
+
+			case 0 :
+					parteEntera = 68 + random.nextInt ( 21 ) ;
+					parteDecimal = random.nextInt ( 100 ) ;
+					dato = Integer.toString(parteEntera) + "." + Integer.toString(parteDecimal) ;
+					return ( dato + " " + paraametros[paraametro] ) ;
+
+			case 1 :
+					parteEntera = 6 + random.nextInt ( 2 ) ;
+					parteDecimal = random.nextInt ( 100 ) ;
+					dato = Integer.toString(parteEntera) + "." + Integer.toString(parteDecimal) ;
+					return ( dato + " " + paraametros[paraametro] ) ;
+
+			case 2 :
+					parteEntera = 2 + random.nextInt ( 9 ) ;
+					parteDecimal = random.nextInt ( 100 ) ;
+					dato = Integer.toString(parteEntera) + "." + Integer.toString(parteDecimal) ;
+					return ( dato + " " + paraametros[paraametro] ) ;
+
+			default :
+					return ( "0.0" ) ;
+
+		}
+
+	}
+
+	public static String funcioon_EstablecerConexioon ( String mensaje ) {
+
+		String respuesta = "Sin respuesta..." ;
 
         try {
 
@@ -43,10 +110,8 @@ public class Cliente {
 
         }
 
-		System.out.println ( respuesta ) ;
-
-
-    }
+	return respuesta ;
+	}
 
 
 }

@@ -44,19 +44,11 @@ public class Servidor extends UnicastRemoteObject implements InterfazServidor {
 
     }
 
-    public String responderMensaje ( String mensaje ) throws RemoteException{
+    public String responderMensaje ( String mensaje ) throws RemoteException {
 
-        String resultado = new String() ;
+		System.out.println ( mensaje ) ;
 
-	if ( mensaje.equals("Hola") ) {
-
-	   return "Chao" ;
-
-	} else {
-
-            return "¿Hola?" ;
-
-	}
+		return ( "Recibido " + mensaje ) ;
 
     }
 
