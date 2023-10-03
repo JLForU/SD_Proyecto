@@ -8,6 +8,7 @@ import java.rmi.Remote ;
 
 
 /* DEFINICIÓN DE INTERFAZ ´InterfazServer´. */
+
 public interface InterfazServidor extends Remote {
 
 
