@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo
+
 # Compile all .java files in the current directory
 for file in *.java; do
     if [ -f "$file" ]; then
@@ -14,4 +16,6 @@ for file in *.java; do
 done
 
 java -cp /usr/share/java/zmq-3.1.0.jar:/usr/share/java/jzmq-3.1.0.jar:/usr/share/java/jzmq.jar:/usr/share/java/zmq.jar:bin Servidor
+
+echo ; echo
 

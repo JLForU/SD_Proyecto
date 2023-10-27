@@ -3,14 +3,9 @@ Repositorio para Proyecto de Sistemas Distribuidos
 
 ## Ejecución
 ### Linux
-#### RMI
+0. `cd JZMQ`
 1. `sudo chmod +x executable.sh`
-2. `./executable_rmi.sh`
-3. `java Servidor`
+2. `./executable.sh`
+3. `./executable_zmq_servidor.sh`
 4. Abrir otra terminal.
-5. `java Cliente`
-#### JZMQ
-1. `sudo chmod +x executable.sh`
-2. `./executable_zmq_servidor.sh`
-3. Abrir otra terminal.
-4. `./executable_zmq_cliente.sh`
+5. `./executable_zmq_cliente.sh`
