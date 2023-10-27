@@ -3,54 +3,55 @@
 
 
 // IMPORTACIONES
-import java.rmi.NotBoundException ;
-import java.rmi.RemoteException ;
-import java.rmi.registry.LocateRegistry ;
-import java.rmi.registry.Registry ;
-import java.rmi.server.UnicastRemoteObject ;
+//// JZMQ.
+import org.zeromq.ZMQ ;
+import java.nio.charset.Charset ;
 
 
 
 /* IMPLEMENTACIÓN DE CLASE ´Servidor´. */
 
-public class Servidor extends UnicastRemoteObject implements InterfazServidor {
+public class Servidor {
     
 
-    //// CONSTRUCTOR ////
-    protected Servidor ( ) throws RemoteException {
-
-        System.out.println ( "Iniciando Servidor..." ) ;
-
-    }
-        
     //// IMPLEMENTACIÓN DE FUNCIÓN "MAIN". ////
     public static void main ( String[] args ) {
 
         
-        try {
+		while ( true ) {
 
-            Servidor S = new Servidor() ;
-            
-            Registry registry = LocateRegistry.createRegistry ( 1090 ) ;
-            registry.rebind ( "Servidor" , S ) ;
-            System.out.println ( "Objeto -server- Registrado en el RMI" ) ;
-        
-        } catch ( RemoteException e ) {
+	        funcioon_ServidorZMQ() ;
 
-            System.out.println ( "Error: " + e ) ; 
-
-        }
-
+		}
+		
 
     }
 
-    public String responderMensaje ( String mensaje ) throws RemoteException {
+	public static void funcioon_ServidorZMQ ( ) {
 
-		System.out.println ( mensaje ) ;
+		try (
+			
+			ZMQ.Context context = ZMQ.context(1) ;
+			ZMQ.Socket socket = context.socket ( ZMQ.REP ) ;
+			
+		) {
 
-		return ( "Recibido " + mensaje ) ;
+            socket.bind ( "tcp://localhost:5555" ) ;
 
-    }
+			// # (2).
+			String mensajeRecibido = socket.recvStr ( Charset.defaultCharset() ) ;
+			System.out.println ( mensajeRecibido ) ;
+			// # (3).
+			String mensajeEnviado = "Recibido " + mensajeRecibido ;
+			socket.send ( mensajeEnviado.getBytes() , ZMQ.NOBLOCK ) ;
+
+		} catch ( Exception e ) {
+
+			System.out.println ( "Error: " + e ) ;
+
+		}
+
+	}
 
 
 }

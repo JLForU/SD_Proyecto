@@ -5,11 +5,10 @@
 // IMPORTACIONES
 //// Números aleatorios.
 import java.util.Random ;
-//// Establecer conexión.
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+//// JZMQ.
+import org.zeromq.ZMQ ;
+import org.zeromq.ZMQException ;
+import java.nio.charset.Charset ;
 
 
 
@@ -27,7 +26,7 @@ public class Cliente {
 
 			String mensaje = funcioon_GenerarParaametros() ;
 
-			String respuesta = funcioon_EstablecerConexioon ( mensaje ) ;
+			String respuesta = funcioon_ClienteZMQ ( mensaje ) ;
 
 			System.out.println ( respuesta ) ;
 
@@ -35,6 +34,42 @@ public class Cliente {
 
 
     }
+
+	public static String funcioon_ClienteZMQ ( String mensaje ) {
+
+		String respuesta = "Sin respuesta..." ;
+
+		try (
+			
+			ZMQ.Context context = ZMQ.context(1) ;
+			ZMQ.Socket socket = context.socket ( ZMQ.REQ ) ;
+			
+		) {
+
+            socket.connect ( "tcp://localhost:5555" ) ;
+
+			// # (1).
+			socket.send ( mensaje.getBytes() , ZMQ.NOBLOCK ) ;
+			// # (4).
+			respuesta = socket.recvStr ( Charset.defaultCharset() ) ;
+
+		} catch ( ZMQException e ) {
+
+   		     if ( e.getErrorCode() == ZMQ.Error.ETERM.getCode() ) {
+   		         // Handle the case where the server has shut down (ETERM error).
+   		         System.out.println ( "Server has shut down." ) ;
+   		     } else {
+   		         // Handle other ZeroMQ-related errors.
+   		         System.out.println ( "Error: " + e ) ;
+   		     }
+
+   		 } catch ( Exception e ) {
+   		     // Handle general exceptions (non-ZeroMQ related).
+   		     System.out.println("Error: " + e) ;
+   		 }
+
+	return respuesta ;
+	}
 
 	public static void funcioon_Esperar ( ) {
 
@@ -84,33 +119,6 @@ public class Cliente {
 
 		}
 
-	}
-
-	public static String funcioon_EstablecerConexioon ( String mensaje ) {
-
-		String respuesta = "Sin respuesta..." ;
-
-        try {
-
-            Registry registry = LocateRegistry.getRegistry ( "localhost" , 1090 ) ;
-
-            InterfazServidor servidor = (InterfazServidor) registry.lookup ( "Servidor" ) ;
-
-			respuesta = servidor.responderMensaje ( mensaje ) ;
-
-        } catch ( NotBoundException e ) {
-
-            System.out.println ( "No se encontró el objeto en el registro." ) ;
-            System.exit(0) ;
-
-        } catch ( RemoteException e ) {
-
-            System.out.println ( "Error: " + e ) ;
-            System.exit(0) ;
-
-        }
-
-	return respuesta ;
 	}
 
 
