@@ -1,10 +1,21 @@
 # SD_Proyecto
-Repositorio para Proyecto de Sistemas Distribuidos
+Repositorio para Proyecto de Sistemas Distribuidos.
 
 ## Implementación
-El sistema actual posee exactamente la misma funcionalidad.
-Sin embargo, tiene dos tecnologías diferentes en su implementación.
+Tecnología MQTT.
+
+## Ejecución
+### Linux
+```
+cd MQTT
+sudo chmod +x ./script.sh
+./script.sh
+```
 
 ## Pendiente
-El siguiente paso es armar la arquitectura con las dos tecnologías simultaneamente implementadas.
-
+1. Verificar calidad de datos.
+2. Registrar datos.
+3. Implementar SdeC.
+* Elegir un "broker" remoto.
+* Desplegar sistema en máquinas virtuales.
+* DOCUMENTO.
