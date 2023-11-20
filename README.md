@@ -10,6 +10,7 @@ Tecnología MQTT.
 cd MQTT
 sudo chmod +x ./script.sh
 ./script.sh
+
 ```
 
 ## Pendiente
