@@ -14,9 +14,9 @@ sudo chmod +x ./script.sh
 ```
 
 ## Pendiente
-1. Verificar calidad de datos.
-2. Registrar datos.
-3. Implementar SdeC.
 * Elegir un "broker" remoto.
 * Desplegar sistema en máquinas virtuales.
 * DOCUMENTO.
+
+## Imágen demostrativa
+...
