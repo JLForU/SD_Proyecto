@@ -42,9 +42,15 @@ def main ( ) :
 # OTHER FUNCTIONS
 def on_message ( client , userdata , message ) :
 
-    mensaje = f"Recibir: {message.payload.decode()}; por medio de '{message.topic}'.\n"
-    function_writeFile ( "log" , mensaje )
-    print ( mensaje )
+    str_mensajeDeLlegada = message.payload.decode()
+    int_mensajeDeLlegada = int ( str_mensajeDeLlegada )
+    
+    mensajeDeRecibir = f"Recibir: {str_mensajeDeLlegada}; por medio de '{message.topic}'.\n"
+
+    if int_mensajeDeLlegada >= 58 and int_mensajeDeLlegada <= 99 :
+        function_writeFile ( "log" , mensajeDeRecibir )
+    else :
+        print ( mensajeDeRecibir )
 
 
 def function_createFile ( string_fileName ) :
