@@ -1,11 +1,14 @@
 #!/bin/bash
 
-for file in ./monitor_*.py; do
-    if [ -f "$file" ]; then
-        gnome-terminal -- bash -c "python3 '$file'; bash"
-    fi
-done
+# SC
+gnome-terminal -- bash -c "python3 sc.py; bash"
 
+# Monitores
+gnome-terminal -- bash -c "python3 monitor.py T; bash"
+gnome-terminal -- bash -c "python3 monitor.py pH; bash"
+gnome-terminal -- bash -c "python3 monitor.py OD; bash"
+
+# Sensores
 for file in ./sensor_*.py; do
     if [ -f "$file" ]; then
         gnome-terminal -- bash -c "python3 '$file'; bash"

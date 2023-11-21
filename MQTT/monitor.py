@@ -1,5 +1,8 @@
 
 # IMPORTS
+## Parametros por consola y salida de programa.
+import sys
+## Protocolo de comunicación.
 import paho.mqtt.client as mqtt
 
 
@@ -9,7 +12,7 @@ import paho.mqtt.client as mqtt
 client = mqtt.Client()
 client.connect ( "localhost" , 1883 )
 ## Tópico
-TOOPICO = "pH"
+TOOPICO = None
 
 
 # MAIN FUNCTION DECLARATION
@@ -17,6 +20,14 @@ def main ( ) :
 
     print ("\n\n")
 
+
+    # Argumentos por consola.
+    if ( len(sys.argv) != 2 ) :
+        print ( "Como argumento se debe incluir algún tópico.\n\n" )
+        sys.exit()
+    else :
+        global TOOPICO 
+        TOOPICO = sys.argv[1]
 
     # Crear archivo BD.
     function_createFile ( "log" )
@@ -42,15 +53,39 @@ def main ( ) :
 # OTHER FUNCTIONS
 def on_message ( client , userdata , message ) :
 
-    str_mensajeDeLlegada = message.payload.decode()
-    int_mensajeDeLlegada = float ( str_mensajeDeLlegada )
-    
-    mensajeDeRecibir = f"Recibir: {str_mensajeDeLlegada}; por medio de '{message.topic}'.\n"
+    mensajeDeLlegada = message.payload.decode()
+    mensajeDeRecibido = f"Recibir: {mensajeDeLlegada}; por medio de '{message.topic}'.\n"
+    funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibido )
 
-    if int_mensajeDeLlegada >= 5.0 and int_mensajeDeLlegada <= 9.0 :
-        function_writeFile ( "log" , mensajeDeRecibir )
-    else :
-        print ( mensajeDeRecibir )
+
+def funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibir ) :
+
+    if ( TOOPICO == "T" ) :
+
+        int_mensajeDeLlegada = int ( mensajeDeLlegada )
+
+        if int_mensajeDeLlegada >= 58 and int_mensajeDeLlegada <= 99 :
+            function_writeFile ( "log" , mensajeDeRecibir )
+        else :
+            client.publish ( "Alarmas" , mensajeDeRecibir )
+
+    elif ( TOOPICO == "pH" ) :
+
+        float_mensajeDeLlegada = float ( mensajeDeLlegada )
+
+        if float_mensajeDeLlegada >= 5.0 and float_mensajeDeLlegada <= 9.0 :
+            function_writeFile ( "log" , mensajeDeRecibir )
+        else :
+            client.publish ( "Alarmas" , mensajeDeRecibir )
+
+    elif ( TOOPICO == "OD" ) :
+
+        int_mensajeDeLlegada = int ( mensajeDeLlegada )
+
+        if int_mensajeDeLlegada >= -3 and int_mensajeDeLlegada <= 16 :
+            function_writeFile ( "log" , mensajeDeRecibir )
+        else :
+            client.publish ( "Alarmas" , mensajeDeRecibir )
 
 
 def function_createFile ( string_fileName ) :
