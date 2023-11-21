@@ -2,6 +2,7 @@
 
 # SC
 gnome-terminal -- bash -c "python3 sc.py; bash"
+# HC
 gnome-terminal -- bash -c "python3 hc.py; bash"
 
 # Monitores
@@ -10,13 +11,10 @@ gnome-terminal -- bash -c "python3 monitor.py pH; bash"
 gnome-terminal -- bash -c "python3 monitor.py OD; bash"
 
 # Sensores
-for file in ./sensor_*.py; do
-    if [ -f "$file" ]; then
-        gnome-terminal -- bash -c "python3 '$file'; bash"
-    fi
-done
-for file in ./sensor_*.py; do
-    if [ -f "$file" ]; then
-        gnome-terminal -- bash -c "python3 '$file'; bash"
-    fi
-done
+gnome-terminal -- bash -c "python3 sensor.py T 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py pH 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py OD 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py T 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py pH 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py OD 2 file; bash"
+gnome-terminal -- bash -c "python3 sensor.py Tiempo 2 file; bash"

@@ -2,6 +2,8 @@
 # IMPORTS
 ## Parametros por consola y salida de programa.
 import sys
+## Tiempo actual.
+from datetime import datetime
 ## Protocolo de comunicación.
 import paho.mqtt.client as mqtt
 
@@ -87,6 +89,23 @@ def funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibir ) :
             function_writeFile ( "log" , mensajeDeRecibir )
         else :
             client.publish ( "Alarmas" , mensajeDeRecibir )
+
+    elif ( TOOPICO == "Tiempo" ) :
+
+        # Tiempo menor.
+        int_mensajeDeLlegada = int ( mensajeDeLlegada )
+
+        # Tiempo mayor.
+        tiempo = datetime.now()
+        minutos = tiempo.minute
+        segundos = tiempo.second
+        milisegundos = tiempo.microsecond // 1000
+        total_milisegundos = ( minutos*60*1000 ) + ( segundos*1000 ) + milisegundos
+
+        # TM - Tm
+        diferencia = total_milisegundos - int_mensajeDeLlegada
+
+        print ( "Tiempo: " + str(diferencia) )
 
 
 def function_createFile ( string_fileName ) :
