@@ -2,6 +2,7 @@
 
 # SC
 gnome-terminal -- bash -c "python3 sc.py; bash"
+gnome-terminal -- bash -c "python3 hc.py; bash"
 
 # Monitores
 gnome-terminal -- bash -c "python3 monitor.py T; bash"

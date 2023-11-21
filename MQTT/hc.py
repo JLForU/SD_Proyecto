@@ -12,7 +12,7 @@ import paho.mqtt.client as mqtt
 client = mqtt.Client()
 client.connect ( "localhost" , 1883 )
 ## Tópico
-TOOPICO = None
+TOOPICO = "HC"
 
 
 # MAIN FUNCTION DECLARATION
@@ -20,17 +20,6 @@ def main ( ) :
 
     print ("\n\n")
 
-
-    # Argumentos por consola.
-    if ( len(sys.argv) != 2 ) :
-        print ( "Como argumento se debe incluir algún tópico.\n\n" )
-        sys.exit()
-    else :
-        global TOOPICO 
-        TOOPICO = sys.argv[1]
-
-    # Crear archivo BD.
-    function_createFile ( "log" )
 
     # Recibir mensaje, especificando un tópico.
     client.subscribe ( TOOPICO )
@@ -40,7 +29,6 @@ def main ( ) :
     try :
         client.loop_forever()
     except KeyboardInterrupt :
-        client.publish ( "HC" , TOOPICO )
         # Handle the KeyboardInterrupt gracefully.
         pass
 
@@ -55,8 +43,19 @@ def main ( ) :
 def on_message ( client , userdata , message ) :
 
     mensajeDeLlegada = message.payload.decode()
-    mensajeDeRecibido = f"Recibir: {mensajeDeLlegada}; por medio de '{message.topic}'.\n"
-    funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibido )
+    
+    if ( mensajeDeLlegada == "T" or mensajeDeLlegada == "pH" or mensajeDeLlegada == "OD" ) :
+
+        global TOOPICO
+        TOOPICO = mensajeDeLlegada
+        client.subscribe ( TOOPICO )
+        # Crear archivo BD.
+        function_createFile ( "log" )
+
+    else :
+
+        mensajeDeRecibido = f"Recibir: {mensajeDeLlegada}; por medio de '{message.topic}'.\n"
+        funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibido )
 
 
 def funcioon_monitorear ( mensajeDeLlegada , mensajeDeRecibir ) :

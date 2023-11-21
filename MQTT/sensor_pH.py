@@ -23,10 +23,14 @@ def main ( ) :
     print ("\n\n")
 
 
-    # Publicar cada cierto tiempo.
-    funcioon_publicar()
-    # Establecer desconexión.
-    client.disconnect()
+    try :
+        # Publicar cada cierto tiempo.
+        funcioon_publicar()
+    except KeyboardInterrupt :
+        # Establecer desconexión.
+        client.disconnect()
+        # Handle the KeyboardInterrupt gracefully.
+        pass
     
 
     print ("\n\n")
