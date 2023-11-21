@@ -26,3 +26,5 @@ replay_pid*
 # Temp files
 *~
 .*~
+*.swp
+log
