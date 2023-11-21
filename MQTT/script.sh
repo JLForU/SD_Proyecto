@@ -9,6 +9,7 @@ gnome-terminal -- bash -c "python3 hc.py; bash"
 gnome-terminal -- bash -c "python3 monitor.py T; bash"
 gnome-terminal -- bash -c "python3 monitor.py pH; bash"
 gnome-terminal -- bash -c "python3 monitor.py OD; bash"
+gnome-terminal -- bash -c "python3 monitor.py Tiempo; bash"
 
 # Sensores
 gnome-terminal -- bash -c "python3 sensor.py T 2 file; bash"
