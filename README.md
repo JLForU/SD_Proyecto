@@ -14,7 +14,6 @@ sudo chmod +x ./script.sh
 ```
 
 ## Pendiente
-* Elegir un "broker" remoto.
 * Desplegar sistema en máquinas virtuales.
 * DOCUMENTO.
 
