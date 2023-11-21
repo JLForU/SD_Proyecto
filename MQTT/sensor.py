@@ -15,7 +15,7 @@ import paho.mqtt.client as mqtt
 # VARIABLES GLOBALES
 ## Establecer conexión.
 client = mqtt.Client()
-client.connect ( "localhost" , 1883 )
+client.connect ( "broker.hivemq.com" , 1883 )
 ## Tópico
 TOOPICO = None
 ## Tiempo
