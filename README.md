@@ -19,4 +19,4 @@ sudo chmod +x ./script.sh
 * DOCUMENTO.
 
 ## Imágen demostrativa
-...
+![Screenshot from 2023-11-21 04-06-11](https://github.com/JLForU/SD_Proyecto/assets/141110756/3cd2f557-032c-48fd-a7df-44418f9337d0)
